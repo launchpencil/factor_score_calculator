@@ -3,19 +3,33 @@ import pandas as pd
 import io
 
 # ページ設定
-st.set_page_config(page_title="easyStat", layout="wide")
+st.set_page_config(page_title="Factor Score Calculator", layout="wide")
 
 # アプリタイトルと作成者
-st.title("easyStat（ブラウザ統計）")
+st.title("Factor Score Calculator（ 因子得点算出Webアプリケーション ）")
 st.caption("Created by Dit-Lab.(Daiki Ito)")
 
+# ひな形ファイルのパス
+template_file_path = '尺度情報.xlsx'
+
 # ファイルアップロードセクション
-st.subheader("ファイルアップロード")
+st.subheader("尺度情報ファイルのアップロード")
 uploaded_file_scale_info = st.file_uploader("尺度情報ファイルをアップロードしてください", type=['xlsx'], key="scale_info")
+# 尺度情報のひな形ファイルのダウンロード
+with open(template_file_path, "rb") as file:
+    btn = st.download_button(
+        label="尺度情報のフォーマットをダウンロード",
+        data=file,
+        file_name="尺度情報.xlsx",
+        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    )
+
+st.subheader("因子得点を算出するファイルのアップロード")
 uploaded_file_data = st.file_uploader("データファイルをアップロードしてください", type=['xlsx'], key="data")
 
 # 何件法の入力
-n_point_scale = st.number_input("何件法を使用していますか？", min_value=1, step=1)
+n_point_scale = st.number_input("何件法を使用していますか？", min_value=5, step=1)
+
 
 # 因子得点の計算とダウンロードボタンの表示
 if uploaded_file_scale_info and uploaded_file_data:
