@@ -5,12 +5,12 @@ import io
 # ページ設定
 st.set_page_config(page_title="Factor Score Calculator")
 
-# アプリタイトルと作成者
+# ヘッダー情報
 st.title("Factor Score Calculator")
 st.subheader("因子得点算出Webアプリケーション")
 st.caption("Created by Dit-Lab.(Daiki Ito)")
 
-# ひな形ファイルのパス
+# 尺度情報フォーマットファイルのパス
 template_file_path = '尺度情報.xlsx'
 
 # ファイルアップロードセクション
@@ -32,7 +32,7 @@ uploaded_file_data = st.file_uploader("データファイルをアップロー�
 # マージン
 st.write("")
 
-# 何件法の入力
+# n件法の入力
 n_point_scale = st.number_input("何件法を使用していますか？", value=4, min_value=3, step=1)
 
 # 因子得点の計算
@@ -82,5 +82,5 @@ if st.session_state.get('factor_scores_calculated', False):
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )
 
-# 著作権表示
+# copyright
 st.markdown('© 2022-2023 Dit-Lab.(Daiki Ito). All Rights Reserved.')
