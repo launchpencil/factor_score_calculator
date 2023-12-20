@@ -41,10 +41,10 @@ if uploaded_file_scale_info and uploaded_file_data:
     data = pd.read_excel(uploaded_file_data)
 
     # ファイル内容の表示
-    st.write("尺度情報プレビュー:")
+    st.subheader("＜尺度情報プレビュー＞")
     st.dataframe(scale_info)
 
-    st.write("データプレビュー:")
+    st.subheader("＜データプレビュー＞")
     st.dataframe(data)
 
     # 因子得点を計算するボタン
@@ -69,7 +69,6 @@ if uploaded_file_scale_info and uploaded_file_data:
         output = io.BytesIO()
         with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
             data.to_excel(writer, index=False, sheet_name='Updated Data')
-            writer.save()
         
         # ダウンロードするファイル名の設定
         download_file_name = uploaded_file_data.name.split('.')[0] + "因子得点算出.xlsx"
