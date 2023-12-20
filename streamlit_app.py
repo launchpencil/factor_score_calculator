@@ -51,7 +51,7 @@ def calculate_factor_scores(scale_info_file, data_file):
         # 反転項目の処理
         for index, row in scale_info.iterrows():
             if row['反転'] == 1:
-                data[row['設問名']] = n_point_scale - data[row['設問名']]
+                data[row['設問名']] = n_point_scale + 1 - data[row['設問名']]
 
         # 因子得点の算出
         for factor in scale_info['因子名'].unique():
