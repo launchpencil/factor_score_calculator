@@ -26,8 +26,21 @@ with open(template_file_path, "rb") as file:
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )
 
+# 尺度情報ファイルのプレビュー
+if uploaded_file_scale_info is not None:
+    scale_info_df = pd.read_excel(uploaded_file_scale_info)
+    st.subheader("＜尺度情報ファイルのプレビュー＞")
+    st.dataframe(scale_info_df) 
+
+
 st.subheader("因子得点を算出するファイルのアップロード")
 uploaded_file_data = st.file_uploader("データファイルをアップロードしてください", type=['xlsx'], key="data")
+
+# データファイルのプレビュー
+if uploaded_file_data is not None:
+    data_df = pd.read_excel(uploaded_file_data)
+    st.subheader("＜データファイルのプレビュー＞")
+    st.dataframe(data_df) 
 
 # マージン
 st.write("")
