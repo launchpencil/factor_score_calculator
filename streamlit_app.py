@@ -17,7 +17,7 @@ template_file_path = '尺度情報.xlsx'
 st.subheader("尺度情報ファイルのアップロード")
 uploaded_file_scale_info = st.file_uploader("尺度情報ファイルをアップロードしてください", type=['xlsx'], key="scale_info")
 
-# 尺度情報のひな形ファイルのダウンロード
+# 尺度情報のフォーマットファイルのダウンロード
 with open(template_file_path, "rb") as file:
     btn = st.download_button(
         label="尺度情報のフォーマットをダウンロード",
@@ -37,30 +37,38 @@ n_point_scale = st.number_input("何件法を使用していますか？", value
 
 # 因子得点の計算
 def calculate_factor_scores():
-    # ファイルの読み込み
-    scale_info = pd.read_excel(uploaded_file_scale_info)
-    data = pd.read_excel(uploaded_file_data)
+    # ファイルの存在をチェック
+    if uploaded_file_scale_info is None or uploaded_file_data is None:
+        st.error("ファイルがアップロードされていません。")
+        return  # 早期リターン
 
-    # 反転項目の処理
-    for index, row in scale_info.iterrows():
-        if row['反転'] == 1:
-            data[row['設問名']] = n_point_scale - data[row['設問名']]
+    try:
+        scale_info = pd.read_excel(uploaded_file_scale_info)
+        data = pd.read_excel(uploaded_file_data)
 
-    # 因子得点の算出
-    for factor in scale_info['因子名'].unique():
-        relevant_questions = scale_info[scale_info['因子名'] == factor]['設問名']
-        data[factor + ' 因子得点'] = data[relevant_questions].mean(axis=1)
+        # 反転項目の処理
+        for index, row in scale_info.iterrows():
+            if row['反転'] == 1:
+                data[row['設問名']] = n_point_scale - data[row['設問名']]
 
-    # 不要な列の削除
-    data.drop(columns=scale_info['設問名'], inplace=True)
+        # 因子得点の算出
+        for factor in scale_info['因子名'].unique():
+            relevant_questions = scale_info[scale_info['因子名'] == factor]['設問名']
+            data[factor + '_因子得点'] = data[relevant_questions].mean(axis=1)
 
-    # セッション状態にデータを保存
-    st.session_state.processed_data = data
+        # 不要な列の削除
+        data.drop(columns=scale_info['設問名'], inplace=True)
+
+        # セッション状態にデータを保存
+        st.session_state.processed_data = data
+
+    except Exception as e:
+        st.error(f"エラーが発生しました: {e}")
+        return  # エラーが発生した場合の早期リターン
 
 # 因子得点を計算するボタン
-if uploaded_file_scale_info and uploaded_file_data:
-    if st.button("因子得点を計算", on_click=calculate_factor_scores):
-        st.session_state.factor_scores_calculated = True
+if st.button("因子得点を計算", on_click=calculate_factor_scores):
+    st.session_state.factor_scores_calculated = True
 
 # 成功メッセージと更新されたデータの表示
 if st.session_state.get('factor_scores_calculated', False):
