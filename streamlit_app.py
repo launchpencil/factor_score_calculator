@@ -41,6 +41,11 @@ def calculate_factor_scores(scale_info_file, data_file):
         scale_info = pd.read_excel(scale_info_file)
         data = pd.read_excel(data_file)
 
+        # 尺度情報ファイルの設問名がデータファイルに存在するか確認
+        missing_questions = [q for q in scale_info['設問名'] if q not in data.columns]
+        if missing_questions:
+            raise ValueError(f"次の設問がデータファイルに存在しません: {', '.join(missing_questions)}")
+
         # 反転項目の処理
         for index, row in scale_info.iterrows():
             if row['反転'] == 1:
