@@ -30,7 +30,7 @@ uploaded_file_data = st.file_uploader("データファイルをアップロー�
 # マージン
 st.write("")
 # 何件法の入力
-n_point_scale = st.number_input("何件法を使用していますか？", min_value=5, step=1)
+n_point_scale = st.number_input("何件法を使用していますか？", value=4, min_value=3, step=1)
 
 
 # 因子得点の計算とダウンロードボタンの表示
