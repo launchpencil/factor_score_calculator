@@ -16,6 +16,7 @@ template_file_path = '尺度情報.xlsx'
 # ファイルアップロードセクション
 st.subheader("尺度情報ファイルのアップロード")
 uploaded_file_scale_info = st.file_uploader("尺度情報ファイルをアップロードしてください", type=['xlsx'], key="scale_info")
+
 # 尺度情報のひな形ファイルのダウンロード
 with open(template_file_path, "rb") as file:
     btn = st.download_button(
@@ -30,9 +31,9 @@ uploaded_file_data = st.file_uploader("データファイルをアップロー�
 
 # マージン
 st.write("")
+
 # 何件法の入力
 n_point_scale = st.number_input("何件法を使用していますか？", value=4, min_value=3, step=1)
-
 
 # 因子得点の計算とダウンロードボタンの表示
 if uploaded_file_scale_info and uploaded_file_data:
@@ -64,6 +65,11 @@ if uploaded_file_scale_info and uploaded_file_data:
 
         # 成功メッセージ
         st.success("因子得点の計算が完了しました。")
+
+        # 更新されたデータを表示
+        st.subheader("＜因子得点が追加されたデータ＞")
+        st.caption("因子得点の算出に使ったカラムは削除されます")
+        st.dataframe(data)
 
         # 更新されたデータをExcelファイルとしてダウンロード
         output = io.BytesIO()
