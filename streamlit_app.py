@@ -27,6 +27,8 @@ with open(template_file_path, "rb") as file:
 st.subheader("因子得点を算出するファイルのアップロード")
 uploaded_file_data = st.file_uploader("データファイルをアップロードしてください", type=['xlsx'], key="data")
 
+# マージン
+st.write("")
 # 何件法の入力
 n_point_scale = st.number_input("何件法を使用していますか？", min_value=5, step=1)
 
