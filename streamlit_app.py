@@ -45,7 +45,7 @@ def calculate_factor_scores(scale_info_file, data_file):
         missing_questions = [q for q in scale_info['設問名'] if q not in data.columns]
         if missing_questions:
             missing_questions_str = "\n".join(missing_questions)
-            st.error(f"次の設問がデータファイルに存在しません:\n「{missing_questions_str}」")
+            st.error(f"次の設問がデータファイルに存在しません:\n{missing_questions_str}")
             return None
 
         # 反転項目の処理
