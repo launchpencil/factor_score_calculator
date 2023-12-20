@@ -71,7 +71,7 @@ if uploaded_file_scale_info and uploaded_file_data:
             data.to_excel(writer, index=False, sheet_name='Updated Data')
         
         # ダウンロードするファイル名の設定
-        download_file_name = uploaded_file_data.name.split('.')[0] + "因子得点算出.xlsx"
+        download_file_name = uploaded_file_data.name.split('.')[0] + "_因子得点算出.xlsx"
         st.download_button(
             label="更新されたデータをダウンロード",
             data=output.getvalue(),
