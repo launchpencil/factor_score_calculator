@@ -7,7 +7,7 @@ st.set_page_config(page_title="Factor Score Calculator")
 
 # アプリタイトルと作成者
 st.title("Factor Score Calculator")
-st.title("因子得点算出Webアプリケーション")
+st.subheader("因子得点算出Webアプリケーション")
 st.caption("Created by Dit-Lab.(Daiki Ito)")
 
 # ひな形ファイルのパス
