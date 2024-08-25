@@ -69,7 +69,7 @@ def calculate_factor_scores(scale_info_file, data_file):
         # 因子得点の算出
         for factor in scale_info['因子名'].unique():
             relevant_questions = scale_info[scale_info['因子名'] == factor]['設問名']
-            data[factor + ' 因子得点'] = data[relevant_questions].mean(axis=1)
+            data[factor + '_因子得点'] = data[relevant_questions].mean(axis=1)
 
         # 不要な列の削除
         data.drop(columns=scale_info['設問名'], inplace=True)
